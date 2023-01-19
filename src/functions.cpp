@@ -15,17 +15,19 @@ string nameOfPlayer(bool turnOfPlayer1, string player1,string player2)
 		return player2;
 }
 
-void displayBoard(vector<vector<string>> &boardPara)
+void displayBoard(vector<vector<string>> &boardPara, int row, int col)
 {
-	cout<<"   |   |   \n";
-	cout<<" "<<boardPara[0][0]<<" | "<<boardPara[0][1]<<" | "<<boardPara[0][2]<<" \n";
-	cout<<"___|___|___\n";
-	cout<<"   |   |   \n";
-	cout<<" "<<boardPara[1][0]<<" | "<<boardPara[1][1]<<" | "<<boardPara[1][2]<<" \n";
-	cout<<"___|___|___\n";
-	cout<<"   |   |   \n";
-	cout<<" "<<boardPara[2][0]<<" | "<<boardPara[2][1]<<" | "<<boardPara[2][2]<<" \n";
-	cout<<"   |   |   \n";
+	
+	for(int i=0; i<row; i++)
+	{
+		cout<<string(col*3 + col+1,'-')<<endl;
+		for(int j=0; j<col; j++)
+		{
+			cout<<"| "<<boardPara[i][j]<<" ";
+		}
+		cout<<"|"<<endl;
+	}
+	cout<<string(col*3 + col+1,'-')<<endl;
 }
 
 void getRowCol(int *row, int *coloumn, string position)
@@ -137,3 +139,17 @@ return 1 : somebody won
 	return 0;
 }
 
+vector<vector<string>> createBoard(int row, int col)
+{
+	vector<vector<string>> board;
+	for(int i=0; i<row; i++)
+	{
+		vector<string> innerVector;
+		for(int j=0; j<col; j++)
+		{
+			innerVector.push_back("-");
+		}
+		board.push_back(innerVector);
+	}
+	return board;
+}

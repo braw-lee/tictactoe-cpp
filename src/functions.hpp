@@ -6,10 +6,10 @@
 using namespace std;
 
 string nameOfPlayer(bool ,string , string );
-void displayBoard(vector<vector<string>> &);
+void displayBoard(vector<vector<string>> &, int , int);
 void getRowCol(int *,int *,string);
 void inputFromPlayer(vector<vector<string>> &, bool);
 int checkWin(vector<vector<string>> &);
-
+vector<vector<string>> createBoard(int , int);
 
 #endif
