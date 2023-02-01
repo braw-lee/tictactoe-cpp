@@ -14,7 +14,7 @@ public:
 	void displayResult();  //prints result
 private:
 	int _currentPlayer;  //can be either X_MARK or O_MARK
-	Board _board;
+	Board _board{5};
 };
 
 #endif

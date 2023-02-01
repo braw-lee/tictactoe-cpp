@@ -15,16 +15,19 @@ void Handler::runGame()
 		int checkWinResult = _board.checkWin();
 		if(checkWinResult == X_WON)
 		{
+			_board.printBoard();
 			cout<<"X won the game!\n\n";
 			return;  //game is over so end here
 		}
 		else if(checkWinResult == O_WON)
 		{
+			_board.printBoard();
 			cout<<"O won the game!\n\n";
 			return;
 		}
 		else if(checkWinResult == TIE)
 		{
+			_board.printBoard();
 			cout<<"This game is a TIE!\n\n";
 			return;
 		}
