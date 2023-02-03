@@ -1,8 +1,2 @@
 #object files
 *.o
-
-#test files
-test/
-
-#todo list
-todo
