@@ -1,2 +1,11 @@
 #object files
 *.o
+
+#testing files
+test/
+
+#todo list
+todo
+
+#the main executable
+main
