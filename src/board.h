@@ -14,7 +14,7 @@ const int X_WON = 10;
 const int O_WON = -10;
 const int TIE = -1;
 const int NOBODY_WON = 0;
-const int CONSECUTIVE_MARKERS_REQUIRED = 3;
+const int CONSECUTIVE_MARKERS_REQUIRED = 5;
 
 class Board
 {

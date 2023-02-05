@@ -13,28 +13,24 @@ void Handler::runGame()
 		inputFromPlayer();
 		
 		int checkWinResult = _board.checkWin();
-		if(checkWinResult == X_WON)
+
+		if(checkWinResult == NOBODY_WON)
+		{}
+		else
 		{
 			_board.printBoard();
-			cout<<"X won the game!\n\n";
-			return;  //game is over so end here
-		}
-		else if(checkWinResult == O_WON)
-		{
-			_board.printBoard();
-			cout<<"O won the game!\n\n";
+			if(checkWinResult == TIE)
+			{
+				cout<<"This game is a TIE!\n";
+			}
+			else if(checkWinResult == X_WON || checkWinResult == O_WON)
+			{
+				displayWinner();
+			}
+			cout<<"GAME OVER!\n\n";
 			return;
 		}
-		else if(checkWinResult == TIE)
-		{
-			_board.printBoard();
-			cout<<"This game is a TIE!\n\n";
-			return;
-		}
-		else if(checkWinResult == NOBODY_WON)
-		{
-			//do nothing
-		}
+
 		changePlayer(); 
 	}
 }
@@ -81,8 +77,7 @@ void Handler::changePlayer()
 	}
 }
 
-void Handler::displayResult()
+void Handler::displayWinner()
 {
-	cout<<MARKERS[_currentPlayer]<<"won the game\n";
-	cout<<"GAME OVER!\n";
+	cout<<MARKERS[_currentPlayer]<<" won the game\n";
 }
