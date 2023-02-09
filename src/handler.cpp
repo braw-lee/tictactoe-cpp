@@ -2,10 +2,22 @@
 #include "board.h"
 using namespace std;
 
+Handler::Handler()
+{
+}
+
+void Handler::setUpBoard()
+{
+	_board.setSize(inputBoardSize());
+	_board.setConsecutiveMarker(inputConsecutiveMarker());
+	_board.createBoard();
+}
+
 void Handler::runGame()
 {
 	_currentPlayer = O_MARK;  //game starts with O
-
+	
+	setUpBoard();
 	for(int i=0; i< _board.getSize() * _board.getSize(); i++)
 	{	
 		_board.printBoard();
@@ -33,6 +45,23 @@ void Handler::runGame()
 
 		changePlayer(); 
 	}
+}
+
+int Handler::inputBoardSize()
+{
+	cout<<"\nEnter board size : ";
+	int size{};
+	cin>>size;
+	return size;
+}
+
+
+int Handler::inputConsecutiveMarker()
+{
+	cout<<"\nEnter consecutive markers required to win : ";
+	int n{};
+	cin>>n;
+	return n;
 }
 
 void Handler::inputFromPlayer()

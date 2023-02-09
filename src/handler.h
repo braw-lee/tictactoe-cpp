@@ -8,13 +8,18 @@ using namespace std;
 class Handler
 {
 public:
+	Handler();
+	void setUpBoard();
 	void runGame();
+	int inputBoardSize();  //takes boardSize as input and returns it
+	int inputConsecutiveMarker();
 	void inputFromPlayer();  //takes input from current player
 	void changePlayer();  //turn switch to another player
 	void displayWinner();  //prints result
 private:
 	int _currentPlayer;  //can be either X_MARK or O_MARK
-	Board _board{5};
+	int _boardSize;
+	Board _board;
 };
 
 #endif
