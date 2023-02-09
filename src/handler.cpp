@@ -2,10 +2,22 @@
 #include "board.h"
 using namespace std;
 
+Handler::Handler()
+{
+}
+
+void Handler::setUpBoard()
+{
+	_board.setSize(inputBoardSize());
+	_board.setConsecutiveMarker(inputConsecutiveMarker());
+	_board.createBoard();
+}
+
 void Handler::runGame()
 {
 	_currentPlayer = O_MARK;  //game starts with O
-
+	
+	setUpBoard();
 	for(int i=0; i< _board.getSize() * _board.getSize(); i++)
 	{	
 		_board.printBoard();
@@ -13,30 +25,43 @@ void Handler::runGame()
 		inputFromPlayer();
 		
 		int checkWinResult = _board.checkWin();
-		if(checkWinResult == X_WON)
+
+		if(checkWinResult == NOBODY_WON)
+		{}
+		else
 		{
 			_board.printBoard();
-			cout<<"X won the game!\n\n";
-			return;  //game is over so end here
-		}
-		else if(checkWinResult == O_WON)
-		{
-			_board.printBoard();
-			cout<<"O won the game!\n\n";
+			if(checkWinResult == TIE)
+			{
+				cout<<"This game is a TIE!\n";
+			}
+			else if(checkWinResult == X_WON || checkWinResult == O_WON)
+			{
+				displayWinner();
+			}
+			cout<<"GAME OVER!\n\n";
 			return;
 		}
-		else if(checkWinResult == TIE)
-		{
-			_board.printBoard();
-			cout<<"This game is a TIE!\n\n";
-			return;
-		}
-		else if(checkWinResult == NOBODY_WON)
-		{
-			//do nothing
-		}
+
 		changePlayer(); 
 	}
+}
+
+int Handler::inputBoardSize()
+{
+	cout<<"\nEnter board size : ";
+	int size{};
+	cin>>size;
+	return size;
+}
+
+
+int Handler::inputConsecutiveMarker()
+{
+	cout<<"\nEnter consecutive markers required to win : ";
+	int n{};
+	cin>>n;
+	return n;
 }
 
 void Handler::inputFromPlayer()
@@ -81,8 +106,7 @@ void Handler::changePlayer()
 	}
 }
 
-void Handler::displayResult()
+void Handler::displayWinner()
 {
-	cout<<MARKERS[_currentPlayer]<<"won the game\n";
-	cout<<"GAME OVER!\n";
+	cout<<MARKERS[_currentPlayer]<<" won the game\n";
 }

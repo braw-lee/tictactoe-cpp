@@ -7,7 +7,7 @@ using namespace std;
 Board::Board()
 {
 	_size = 3;  //default board is 3X3
-	createBoard();
+	_consecutiveMarkersRequired = 3;  //default game settings
 }
 
 Board::Board(int size)
@@ -17,7 +17,6 @@ Board::Board(int size)
 		perror("INVALID SIZE\n");
 	}
 	_size = size;
-	createBoard();
 }
 
 void Board::createBoard()
@@ -94,7 +93,7 @@ int Board::checkWin()
 			if(getVal(i,j)!=EMPTY && getVal(i,j)==getVal(i,j+1))
 			{
 				counter+=1;
-				if(counter == CONSECUTIVE_MARKERS_REQUIRED)
+				if(counter == _consecutiveMarkersRequired)
 				{
 					if(getVal(i,j) == X_MARK)
 						return X_WON;
@@ -119,7 +118,7 @@ int Board::checkWin()
 			if(getVal(j,i)!=EMPTY && getVal(j,i)==getVal(j+1,i))
 			{
 				counter+=1;
-				if(counter == CONSECUTIVE_MARKERS_REQUIRED)
+				if(counter == _consecutiveMarkersRequired)
 				{
 					if(getVal(j,i) == X_MARK)
 						return X_WON;
@@ -136,7 +135,7 @@ int Board::checkWin()
 	}
 
 	//check left to right diagonals
-	for(int i=0; i< _size-CONSECUTIVE_MARKERS_REQUIRED+1; i++)
+	for(int i=0; i< _size-_consecutiveMarkersRequired+1; i++)
 	{
 		counter = 1;
 		for(int j=0; j< _size-i-1; j++)
@@ -144,7 +143,7 @@ int Board::checkWin()
 			if(getVal(j,i+j) != EMPTY && getVal(j,i+j) == getVal(j+1,i+j+1))
 			{
 				counter+=1;
-				if(counter == CONSECUTIVE_MARKERS_REQUIRED)
+				if(counter == _consecutiveMarkersRequired)
 				{
 					if(getVal(j,i+j) == X_MARK)
 						return X_WON;
@@ -158,7 +157,7 @@ int Board::checkWin()
 			}
 		}
 	}	
-	for(int i=0; i< _size-CONSECUTIVE_MARKERS_REQUIRED+1; i++)
+	for(int i=0; i< _size-_consecutiveMarkersRequired+1; i++)
 	{
 		counter = 1;
 		for(int j=0; j< _size-i-1; j++)
@@ -166,7 +165,7 @@ int Board::checkWin()
 			if(getVal(i+j,j) != EMPTY && getVal(i+j,j) == getVal(i+j+1,j+1))
 			{
 				counter+=1;
-				if(counter == CONSECUTIVE_MARKERS_REQUIRED)
+				if(counter == _consecutiveMarkersRequired)
 				{
 					if(getVal(i+j,j) == X_MARK)
 						return X_WON;
@@ -182,7 +181,7 @@ int Board::checkWin()
 	}
 
 	//check right to left diagonals
-	for(int i=0; i< _size-CONSECUTIVE_MARKERS_REQUIRED+1; i++)
+	for(int i=0; i< _size-_consecutiveMarkersRequired+1; i++)
 	{
 		counter = 1;
 		for(int j=0; j< _size-i-1; j++)
@@ -190,7 +189,7 @@ int Board::checkWin()
 			if(getVal(_size-1-j,i+j) != EMPTY && getVal(_size-1-j,i+j) == getVal(_size-1-j-1,i+j+1))
 			{
 				counter+=1;
-				if(counter == CONSECUTIVE_MARKERS_REQUIRED)
+				if(counter == _consecutiveMarkersRequired)
 				{
 					if(getVal(_size-1-j,i+j) == X_MARK)
 						return X_WON;
@@ -204,7 +203,7 @@ int Board::checkWin()
 			}
 		}
 	}	
-	for(int i=0; i< _size-CONSECUTIVE_MARKERS_REQUIRED+1; i++)
+	for(int i=0; i< _size-_consecutiveMarkersRequired+1; i++)
 	{
 		counter = 1;
 		for(int j=0; j< _size-i-1; j++)
@@ -212,7 +211,7 @@ int Board::checkWin()
 			if(getVal(_size-1-i-j,j) != EMPTY && getVal(_size-1-i-j,j) == getVal(_size-1-i-j-1,j+1))
 			{
 				counter+=1;
-				if(counter == CONSECUTIVE_MARKERS_REQUIRED)
+				if(counter == _consecutiveMarkersRequired)
 				{
 					if(getVal(_size-1-i-j,j) == X_MARK)
 						return X_WON;
@@ -244,4 +243,14 @@ int Board::checkWin()
 int Board::getSize()
 {
 	return _size;
+}
+
+void Board::setSize(int size)
+{
+	_size = size;
+}
+
+void Board::setConsecutiveMarker(int consecutiveMarkersRequired)
+{
+	_consecutiveMarkersRequired = consecutiveMarkersRequired;
 }
