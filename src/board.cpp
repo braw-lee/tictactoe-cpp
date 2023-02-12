@@ -48,7 +48,8 @@ void Board::printBoard()
 	int row,col; //for future use
 	row= _size;
 	col= _size;
-
+	
+	cout<<"\n";
 	cout<<"   ";
 	for(int k=0; k<col; k++)
 	{		

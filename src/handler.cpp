@@ -6,6 +6,38 @@ Handler::Handler()
 {
 }
 
+void Handler::inputGameMode()
+{
+	cout<<"\nChoose a game mode";
+	cout<<"\n\t1 Two player\n\t2 Single player easy\n\t3 Single player hard";
+	bool done{false};
+	while(!done)
+	{
+		cout<<"\nEnter 1 , 2 or 3 : ";
+		int x;
+		cin>>x;
+
+		switch(x)
+		{
+			case 1: 
+				_mode = GameMode::twoPlayer;
+				done = true;
+				break;
+			case 2:
+				_mode = GameMode::singlePlayerEasy;
+				done = true;
+				break;
+			case 3:
+				_mode = GameMode::singlePlayerHard;
+				done = true;
+				break;
+			default:
+				cout<<"\nINVALID CHOICE\nTRY AGAIN!";
+				break;
+		}
+	}
+}
+
 void Handler::setUpBoard()
 {
 	_board.setSize(inputBoardSize());
@@ -15,9 +47,19 @@ void Handler::setUpBoard()
 
 void Handler::runGame()
 {
+	inputGameMode();
+	if(_mode == GameMode::twoPlayer)
+		runTwoPlayerGame();
+	else if(_mode == GameMode::singlePlayerEasy)
+		runSinglePlayerEasyGame();
+}
+
+void Handler::runTwoPlayerGame()
+{
 	_currentPlayer = O_MARK;  //game starts with O
 	
 	setUpBoard();
+
 	for(int i=0; i< _board.getSize() * _board.getSize(); i++)
 	{	
 		_board.printBoard();
@@ -47,6 +89,65 @@ void Handler::runGame()
 	}
 }
 
+void Handler::runSinglePlayerEasyGame()
+{
+	_currentPlayer = O_MARK; //Game starts with O
+	while(1)
+	{	
+		cout<<"Enter 1 for 'X' or 2 for 'O', 'O' starts the game : ";
+		int c;
+		cin>>c;
+
+		if(c == 1)
+		{
+			_humanPlayer = X_MARK;
+			_easyPlayer = O_MARK;
+			break;
+		}
+		else if(c == 2)
+		{
+			_humanPlayer = O_MARK;
+			_easyPlayer = X_MARK;
+			break;
+		}
+		else
+			cout<<"\nINVALID CHOICE!\nTRY AGAIN!";
+	}
+	setUpBoard();
+
+	for(int i=0; i< _board.getSize() * _board.getSize(); i++)
+	{
+		_board.printBoard();
+		cout<<MARKERS[_currentPlayer]<<"'s turn : ";
+		if(_currentPlayer == _easyPlayer)
+			_easy.move(_board, _easyPlayer);
+		else if(_currentPlayer == _humanPlayer)
+			inputFromPlayer();
+
+		int checkWinResult = _board.checkWin();
+
+		if(checkWinResult == NOBODY_WON)
+		{}
+		else
+		{
+			_board.printBoard();
+			if(checkWinResult == TIE)
+			{
+				cout<<"This game is a TIE!\n";
+			}
+			else if(checkWinResult == X_WON || checkWinResult == O_WON)
+			{
+				displayWinner();
+			}
+			cout<<"GAME OVER!\n\n";
+			return;
+		}
+		changePlayer(); 
+	}
+
+
+}
+
 int Handler::inputBoardSize()
 {
 	cout<<"\nEnter board size : ";
@@ -67,8 +168,7 @@ int Handler::inputConsecutiveMarker()
 void Handler::inputFromPlayer()
 {
 	while(1)
-	{
-			
+	{	
 		int x,y;
 		cout<<"\nEnter x cordinate : ";
 		cin>>x;
