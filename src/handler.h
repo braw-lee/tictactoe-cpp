@@ -2,6 +2,7 @@
 #define HANDLER_H
 
 #include "easy.h"
+#include "hard.h"
 #include "board.h"
 #include <iostream>
 using namespace std;
@@ -23,6 +24,7 @@ public:
 	void runGame();
 	void runTwoPlayerGame();
 	void runSinglePlayerEasyGame();
+	void runSinglePlayerHardGame();
 	int inputBoardSize();  //takes boardSize as input and returns it
 	int inputConsecutiveMarker();
 	void inputFromPlayer();  //takes input from current player
@@ -35,7 +37,7 @@ private:
 	GameMode _mode;
 	int _humanPlayer;  //denotes marker of human player
 	int _easyPlayer;  //denotes marker of easy player
-	Easy _easy;  //create instance of easy player
+	int _hardPlayer;  //denotes marker of hard player
 };
 
 #endif

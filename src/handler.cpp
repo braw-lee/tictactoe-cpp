@@ -52,6 +52,8 @@ void Handler::runGame()
 		runTwoPlayerGame();
 	else if(_mode == GameMode::singlePlayerEasy)
 		runSinglePlayerEasyGame();
+	else if(_mode == GameMode::singlePlayerHard)
+		runSinglePlayerHardGame();
 }
 
 void Handler::runTwoPlayerGame()
@@ -92,6 +94,9 @@ void Handler::runTwoPlayerGame()
 void Handler::runSinglePlayerEasyGame()
 {
 	_currentPlayer = O_MARK; //Game starts with O
+
+	setUpBoard();
+
 	while(1)
 	{	
 		cout<<"Enter 1 for 'X' or 2 for 'O', 'O' starts the game : ";
@@ -113,14 +118,15 @@ void Handler::runSinglePlayerEasyGame()
 		else
 			cout<<"\nINVALID CHOICE!\nTRY AGAIN!";
 	}
-	setUpBoard();
 
+	//setup easy player
+	Easy easy;
 	for(int i=0; i< _board.getSize() * _board.getSize(); i++)
 	{
 		_board.printBoard();
 		cout<<MARKERS[_currentPlayer]<<"'s turn : ";
 		if(_currentPlayer == _easyPlayer)
-			_easy.move(_board, _easyPlayer);
+			easy.move(_board, _easyPlayer);
 		else if(_currentPlayer == _humanPlayer)
 			inputFromPlayer();
 
@@ -144,8 +150,68 @@ void Handler::runSinglePlayerEasyGame()
 		}
 		changePlayer(); 
 	}
+}
 
+void Handler::runSinglePlayerHardGame()
+{
+	_currentPlayer = O_MARK; //Game starts with O
+	
+	setUpBoard();
+	
+	while(1)
+	{	
+		cout<<"Enter 1 for 'X' or 2 for 'O', 'O' starts the game : ";
+		int c;
+		cin>>c;
 
+		if(c == 1)
+		{
+			_humanPlayer = X_MARK;
+			_hardPlayer = O_MARK;
+			break;
+		}
+		else if(c == 2)
+		{
+			_humanPlayer = O_MARK;
+			_hardPlayer = X_MARK;
+			break;
+		}
+		else
+			cout<<"\nINVALID CHOICE!\nTRY AGAIN!";
+	}
+
+	//setup _hard
+	Hard hard;
+	hard.setMarker(_hardPlayer);
+	for(int i=0; i< _board.getSize() * _board.getSize(); i++)
+	{
+		_board.printBoard();
+		cout<<MARKERS[_currentPlayer]<<"'s turn : ";
+		if(_currentPlayer == _hardPlayer)
+			hard.playHardMove(_board);
+		else if(_currentPlayer == _humanPlayer)
+			inputFromPlayer();
+
+		int checkWinResult = _board.checkWin();
+
+		if(checkWinResult == NOBODY_WON)
+		{}
+		else
+		{
+			_board.printBoard();
+			if(checkWinResult == TIE)
+			{
+				cout<<"This game is a TIE!\n";
+			}
+			else if(checkWinResult == X_WON || checkWinResult == O_WON)
+			{
+				displayWinner();
+			}
+			cout<<"GAME OVER!\n\n";
+			return;
+		}
+		changePlayer(); 
+	}
 }
 
 int Handler::inputBoardSize()
